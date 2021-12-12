@@ -34,4 +34,13 @@ public class UserDao {
 		}
 		return false;
 	}
+	
+	public void resetPassword(String email, String password) {
+		Transaction tx = session.beginTransaction();
+		Query<User> query = session.createQuery("UPDATE User SET password=:password WHERE email =:email");
+		query.setParameter("email", email);
+		query.setParameter("password", password);
+		query.executeUpdate();
+		tx.commit();
+	}
 }
